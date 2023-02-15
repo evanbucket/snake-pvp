@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AngryController : MonoBehaviour
+public class SadController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    // Change when making sad snake to change direction
-    private Vector2 direction = Vector2.right;
+    private Vector2 direction = Vector2.left;
     private Vector2 input;
     private List<Transform> segments = new List<Transform>();
     public Transform segmentPrefab;
-    public GameObject sadSnake;
+    public GameObject angrySnake;
     /* when making sad snake, change initial size to be different, maybe adjust this one accordingly.
     maybe angry snake could be bigger and more aggressive, and sad snake is smaller and more strategic?
     ...or maybe the different size gimmick is stupid and shouldn't be implemented.*/
@@ -20,7 +19,7 @@ public class AngryController : MonoBehaviour
     void Start()
     {
         // Allows the snake to start at size 3 at the start of the game by resetting the state of the game
-        ResetAngryState();
+        ResetSadState();
     }
 
     //Update is called once per frame
@@ -29,21 +28,22 @@ public class AngryController : MonoBehaviour
         // Only allow turning up or down while moving in the x-axis
         if (direction.x != 0f)
         {
-            if (Input.GetKeyDown(KeyCode.W)) {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) {
                 input = Vector2.up;
-            } else if (Input.GetKeyDown(KeyCode.S)) {
+            } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
                 input = Vector2.down;
             }
         }
         // Only allow turning left or right while moving in the y-axis
         else if (direction.y != 0f)
         {
-            if (Input.GetKeyDown(KeyCode.A)) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
                 input = Vector2.left;
-            } else if (Input.GetKeyDown(KeyCode.D)) {
+            } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
                 input = Vector2.right;
             }
         }
+        /*Debug.Log(segments.Count);*/
     } 
 
     void FixedUpdate()
@@ -74,17 +74,19 @@ public class AngryController : MonoBehaviour
 
         segments.Add(segment);
     }
-    private void ResetEnemyState()
+
+    private void ResetEnemyState() 
     {
-        sadSnake.GetComponent<SadController>().ResetSadState(); 
+        angrySnake.GetComponent<AngryController>().ResetAngryState(); 
     }
-    
+
     // change this when need to change the consequences for collision against walls/yourself, maybe?
-    public void ResetAngryState()
+    // Also change direction it starts when sad snake is being made
+    public void ResetSadState()
     {
         ResetEnemyState();
-        direction = Vector2.right;
-        this.transform.position = new Vector3(-11, 0, 0);
+        direction = Vector2.left;
+        this.transform.position = new Vector3(11, 0, 0);
 
         // Start at 1 to skip destroying the head
         for (int i = 1; i < segments.Count; i++) {
@@ -108,7 +110,7 @@ public class AngryController : MonoBehaviour
         if (other.tag == "Food") {
             Grow();
         } else if (other.tag == "Obstacle") {
-            ResetAngryState(); 
+            ResetSadState(); 
         }
     }
 }
