@@ -10,10 +10,8 @@ public class SadController : MonoBehaviour
     private List<Transform> segments = new List<Transform>();
     public Transform segmentPrefab;
     public GameObject angrySnake;
-    /* when making sad snake, change initial size to be different, maybe adjust this one accordingly.
-    maybe angry snake could be bigger and more aggressive, and sad snake is smaller and more strategic?
-    ...or maybe the different size gimmick is stupid and shouldn't be implemented.*/
     public int initialSize = 3;
+    private bool isResettingEnemyState = false;
 
     //Start is called before the first frame update
     void Start()
@@ -43,7 +41,6 @@ public class SadController : MonoBehaviour
                 input = Vector2.right;
             }
         }
-        /*Debug.Log(segments.Count);*/
     } 
 
     void FixedUpdate()
@@ -77,13 +74,18 @@ public class SadController : MonoBehaviour
 
     private void ResetEnemyState() 
     {
+        isResettingEnemyState = true;
         angrySnake.GetComponent<AngryController>().ResetAngryState(); 
+        isResettingEnemyState = false;
     }
 
     // change this when need to change the consequences for collision against walls/yourself, maybe?
     // Also change direction it starts when sad snake is being made
     public void ResetSadState()
     {
+        if(isResettingEnemyState) {
+            return;
+        }
         ResetEnemyState();
         direction = Vector2.left;
         this.transform.position = new Vector3(11, 0, 0);
@@ -105,12 +107,15 @@ public class SadController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        /* collision with food and collision with obstacle. You may want to change ResetState
-        later when the actual unique parts of the game are being developed.*/
+        // collision with food and collision with obstacle.
         if (other.tag == "Food") {
             Grow();
         } else if (other.tag == "Obstacle") {
-            ResetSadState(); 
+            ResetSadState();
+            // Lose a life!
+        } else if (other.tag == "Player") {
+            ResetSadState();
+            // TIE!!
         }
     }
 }

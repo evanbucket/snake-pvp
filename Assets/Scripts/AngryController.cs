@@ -11,10 +11,8 @@ public class AngryController : MonoBehaviour
     private List<Transform> segments = new List<Transform>();
     public Transform segmentPrefab;
     public GameObject sadSnake;
-    /* when making sad snake, change initial size to be different, maybe adjust this one accordingly.
-    maybe angry snake could be bigger and more aggressive, and sad snake is smaller and more strategic?
-    ...or maybe the different size gimmick is stupid and shouldn't be implemented.*/
     public int initialSize = 3;
+    private bool isResettingEnemyState = false;
 
     //Start is called before the first frame update
     void Start()
@@ -76,12 +74,17 @@ public class AngryController : MonoBehaviour
     }
     private void ResetEnemyState()
     {
-        sadSnake.GetComponent<SadController>().ResetSadState(); 
+        isResettingEnemyState = true;
+        sadSnake.GetComponent<SadController>().ResetSadState();
+        isResettingEnemyState = false;
     }
     
     // change this when need to change the consequences for collision against walls/yourself, maybe?
     public void ResetAngryState()
     {
+        if(isResettingEnemyState) {
+            return;
+        }
         ResetEnemyState();
         direction = Vector2.right;
         this.transform.position = new Vector3(-11, 0, 0);
@@ -103,12 +106,15 @@ public class AngryController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        /* collision with food and collision with obstacle. You may want to change ResetState
-        later when the actual unique parts of the game are being developed.*/
+        // collision with food and collision with obstacle.
         if (other.tag == "Food") {
             Grow();
         } else if (other.tag == "Obstacle") {
             ResetAngryState(); 
+            // Lose a life!
+        } else if (other.tag == "Player") {
+            ResetAngryState();
+            // TIE!
         }
-    }
+    } 
 }
