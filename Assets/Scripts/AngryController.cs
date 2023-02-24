@@ -116,5 +116,9 @@ public class AngryController : MonoBehaviour
             ResetAngryState();
             // TIE!
         }
+
+        // I'm not sure how health would be done as of now.
+        // I'm thinking that firstly, I need to add a thing that detects how many hearts
+        // each snake has, so that it can detect when either of them are zero, so the winner can be decided.
     } 
 }
