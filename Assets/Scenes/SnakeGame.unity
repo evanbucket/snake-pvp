@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 155652142}
   - component: {fileID: 155652141}
   - component: {fileID: 155652140}
+  - component: {fileID: 155652145}
   m_Layer: 0
   m_Name: Sad Snake
   m_TagString: Player
@@ -272,6 +273,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &155652145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155652139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5df1c9f55e57ee4d9229c5180d7cefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullHeart: {fileID: 2069913448, guid: 678d1541cb6152c4d8b40708dd56f836, type: 3}
+  emptyHeart: {fileID: 976026931, guid: 678d1541cb6152c4d8b40708dd56f836, type: 3}
+  heart1: {fileID: 994712942}
+  heart2: {fileID: 1039334083}
+  life: 2
 --- !u!1 &195322196
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,8 +664,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -389.8, y: 207.2}
-  m_SizeDelta: {x: 49.3512, y: 49.3512}
+  m_AnchoredPosition: {x: -385.4, y: 207.2}
+  m_SizeDelta: {x: 49.351196, y: 49.351196}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &806060249
 MonoBehaviour:
@@ -888,7 +906,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -5727,7 +5745,7 @@ GameObject:
   - component: {fileID: 994712945}
   - component: {fileID: 994712944}
   m_Layer: 5
-  m_Name: Sad Heart 2
+  m_Name: Sad Heart 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5750,8 +5768,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 389.8, y: 207.2}
-  m_SizeDelta: {x: 49.3512, y: 49.3512}
+  m_AnchoredPosition: {x: 385.4, y: 207.2}
+  m_SizeDelta: {x: 49.351196, y: 49.351196}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &994712944
 MonoBehaviour:
@@ -5803,7 +5821,7 @@ GameObject:
   - component: {fileID: 1039334086}
   - component: {fileID: 1039334085}
   m_Layer: 5
-  m_Name: Sad Heart 1
+  m_Name: Sad Heart 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5826,8 +5844,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 348.5, y: 207.2}
-  m_SizeDelta: {x: 49.3512, y: 49.3512}
+  m_AnchoredPosition: {x: 385.4, y: 163.1}
+  m_SizeDelta: {x: 49.351196, y: 49.351196}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1039334085
 MonoBehaviour:
@@ -5935,8 +5953,8 @@ Canvas:
   m_GameObject: {fileID: 1144063553}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 839572660}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -6006,8 +6024,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -348.5, y: 207.2}
-  m_SizeDelta: {x: 49.3512, y: 49.3512}
+  m_AnchoredPosition: {x: -385.4, y: 163.1}
+  m_SizeDelta: {x: 49.351196, y: 49.351196}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1519620859
 MonoBehaviour:
@@ -6060,6 +6078,7 @@ GameObject:
   - component: {fileID: 1553004784}
   - component: {fileID: 1553004787}
   - component: {fileID: 1553004788}
+  - component: {fileID: 1553004789}
   m_Layer: 0
   m_Name: Angry Snake
   m_TagString: Player
@@ -6196,3 +6215,20 @@ MonoBehaviour:
   segmentPrefab: {fileID: 8291240845200575037, guid: 1f8bcd078b2eca640b183729b74efad8, type: 3}
   sadSnake: {fileID: 155652139}
   initialSize: 3
+--- !u!114 &1553004789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553004783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c0bfda5271d6e419a8646845c4130e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullHeart: {fileID: -2002085928, guid: 678d1541cb6152c4d8b40708dd56f836, type: 3}
+  emptyHeart: {fileID: 976026931, guid: 678d1541cb6152c4d8b40708dd56f836, type: 3}
+  heart1: {fileID: 806060247}
+  heart2: {fileID: 1519620857}
+  life: 2

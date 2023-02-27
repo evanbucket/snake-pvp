@@ -78,8 +78,8 @@ public class AngryController : MonoBehaviour
         sadSnake.GetComponent<SadController>().ResetSadState();
         isResettingEnemyState = false;
     }
-    
-    // change this when need to change the consequences for collision against walls/yourself, maybe?
+
+    // starting direction still doesn't work?
     public void ResetAngryState()
     {
         if(isResettingEnemyState) {
@@ -112,13 +112,10 @@ public class AngryController : MonoBehaviour
         } else if (other.tag == "Obstacle") {
             ResetAngryState(); 
             // Lose a life!
+            GetComponent<AngryHeartSystem>().TakeDamage(1);
         } else if (other.tag == "Player") {
             ResetAngryState();
             // TIE!
         }
-
-        // I'm not sure how health would be done as of now.
-        // I'm thinking that firstly, I need to add a thing that detects how many hearts
-        // each snake has, so that it can detect when either of them are zero, so the winner can be decided.
     } 
 }

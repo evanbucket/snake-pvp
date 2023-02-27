@@ -79,8 +79,7 @@ public class SadController : MonoBehaviour
         isResettingEnemyState = false;
     }
 
-    // change this when need to change the consequences for collision against walls/yourself, maybe?
-    // Also change direction it starts when sad snake is being made
+    // starting direction still doesn't work?
     public void ResetSadState()
     {
         if(isResettingEnemyState) {
@@ -113,13 +112,11 @@ public class SadController : MonoBehaviour
         } else if (other.tag == "Obstacle") {
             ResetSadState();
             // Lose a life!
+            GetComponent<SadHeartSystem>().TakeDamage(1);
         } else if (other.tag == "Player") {
             ResetSadState();
-            // TIE!!
+            // Tie, no health lost! Maybe add something to indicate this
+            // or maybe have both of them lose 1 health?
         }
-
-        // I'm not sure how health would be done as of now.
-        // I'm thinking that firstly, I need to add a thing that detects how many hearts
-        // each snake has, so that it can detect when either of them are zero, so the winner can be decided.
     }
 }
