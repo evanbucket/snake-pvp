@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AngryHeartSystem : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class AngryHeartSystem : MonoBehaviour
     public GameObject heart1;
     public GameObject heart2;
     public int life;
+   
 
     public void RemoveHeart()
     {
@@ -24,6 +26,8 @@ public class AngryHeartSystem : MonoBehaviour
         }
         if(life == 0) {
             heart2.GetComponent<Image>().sprite = emptyHeart;
+            int currentScene = SceneManager.GetActiveScene().buildIndex;
+            // Get sad snake health, but how?
         }
     }
 }

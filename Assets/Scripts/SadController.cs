@@ -10,6 +10,7 @@ public class SadController : MonoBehaviour
     private List<Transform> segments = new List<Transform>();
     public Transform segmentPrefab;
     public GameObject angrySnake;
+    public GameObject foodFruit2;
     public int initialSize = 3;
     private bool isResettingEnemyState = false;
 
@@ -75,11 +76,11 @@ public class SadController : MonoBehaviour
     private void ResetEnemyState() 
     {
         isResettingEnemyState = true;
-        angrySnake.GetComponent<AngryController>().ResetAngryState(); 
+        angrySnake.GetComponent<AngryController>().ResetAngryState();
+        foodFruit2.GetComponent<Food>().RandomizePosition();
         isResettingEnemyState = false;
     }
 
-    // starting direction still doesn't work?
     public void ResetSadState()
     {
         if(isResettingEnemyState) {
@@ -87,6 +88,7 @@ public class SadController : MonoBehaviour
         }
         ResetEnemyState();
         direction = Vector2.left;
+        input = Vector2.left;
         this.transform.position = new Vector3(11, 0, 0);
 
         // Start at 1 to skip destroying the head
@@ -106,17 +108,14 @@ public class SadController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // collision with food and collision with obstacle.
+        // collision with food and obstacle/player.
         if (other.tag == "Food") {
             Grow();
-        } else if (other.tag == "Obstacle") {
+        } else if (other.tag == "Obstacle" || other.tag == "Player") {
             ResetSadState();
+
             // Lose a life!
             GetComponent<SadHeartSystem>().TakeDamage(1);
-        } else if (other.tag == "Player") {
-            ResetSadState();
-            // Tie, no health lost! Maybe add something to indicate this
-            // or maybe have both of them lose 1 health?
         }
     }
 }

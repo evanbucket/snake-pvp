@@ -7,7 +7,7 @@ public class Food : MonoBehaviour
 
     public BoxCollider2D gridArea;
 
-    private void RandomizePosition()
+    public void RandomizePosition()
     {
         Bounds bounds = this.gridArea.bounds;
 

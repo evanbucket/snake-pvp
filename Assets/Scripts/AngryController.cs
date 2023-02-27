@@ -11,6 +11,7 @@ public class AngryController : MonoBehaviour
     private List<Transform> segments = new List<Transform>();
     public Transform segmentPrefab;
     public GameObject sadSnake;
+    public GameObject foodFruit;
     public int initialSize = 3;
     private bool isResettingEnemyState = false;
 
@@ -42,6 +43,9 @@ public class AngryController : MonoBehaviour
                 input = Vector2.right;
             }
         }
+        // I KNOW WHAT THE INPUT PROBLEM IS!
+        // When there are 2 inputs while the snake is on one tile, the game only inputs the first one, instead of both of them in sequence.
+        // How to fix this: I have no idea. BUT NOW I KNOW WHAT THE PROBLEM IS! its not fps I don't think
     } 
 
     void FixedUpdate()
@@ -76,10 +80,10 @@ public class AngryController : MonoBehaviour
     {
         isResettingEnemyState = true;
         sadSnake.GetComponent<SadController>().ResetSadState();
+        foodFruit.GetComponent<Food>().RandomizePosition();
         isResettingEnemyState = false;
     }
 
-    // starting direction still doesn't work?
     public void ResetAngryState()
     {
         if(isResettingEnemyState) {
@@ -87,6 +91,7 @@ public class AngryController : MonoBehaviour
         }
         ResetEnemyState();
         direction = Vector2.right;
+        input = Vector2.right;
         this.transform.position = new Vector3(-11, 0, 0);
 
         // Start at 1 to skip destroying the head
@@ -106,16 +111,14 @@ public class AngryController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // collision with food and collision with obstacle.
+        // collision with food and obstacle/player.
         if (other.tag == "Food") {
             Grow();
-        } else if (other.tag == "Obstacle") {
+        } else if (other.tag == "Obstacle" || other.tag == "Player") {
             ResetAngryState(); 
+
             // Lose a life!
             GetComponent<AngryHeartSystem>().TakeDamage(1);
-        } else if (other.tag == "Player") {
-            ResetAngryState();
-            // TIE!
         }
     } 
 }
