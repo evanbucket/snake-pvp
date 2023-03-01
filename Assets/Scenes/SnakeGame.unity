@@ -415,7 +415,7 @@ MonoBehaviour:
   emptyHeart: {fileID: 976026931, guid: 678d1541cb6152c4d8b40708dd56f836, type: 3}
   heart1: {fileID: 994712942}
   heart2: {fileID: 1039334083}
-  life: 2
+  sadLife: 2
 --- !u!1 &195322196
 GameObject:
   m_ObjectHideFlags: 0
@@ -6436,7 +6436,7 @@ MonoBehaviour:
   emptyHeart: {fileID: 976026931, guid: 678d1541cb6152c4d8b40708dd56f836, type: 3}
   heart1: {fileID: 806060247}
   heart2: {fileID: 1519620857}
-  life: 2
+  angryLife: 2
 --- !u!1 &1972952819
 GameObject:
   m_ObjectHideFlags: 0

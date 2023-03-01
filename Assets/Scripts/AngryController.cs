@@ -30,16 +30,19 @@ public class AngryController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.W)) {
                 input = Vector2.up;
-            } else if (Input.GetKeyDown(KeyCode.S)) {
+            }
+            if (Input.GetKeyDown(KeyCode.S)) {
                 input = Vector2.down;
             }
         }
         // Only allow turning left or right while moving in the y-axis
-        else if (direction.y != 0f)
+        if (direction.y != 0f)
         {
             if (Input.GetKeyDown(KeyCode.A)) {
                 input = Vector2.left;
-            } else if (Input.GetKeyDown(KeyCode.D)) {
+            }
+            
+            if (Input.GetKeyDown(KeyCode.D)) {
                 input = Vector2.right;
             }
         }

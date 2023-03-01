@@ -29,16 +29,20 @@ public class SadController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow)) {
                 input = Vector2.up;
-            } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            }
+            
+            if (Input.GetKeyDown(KeyCode.DownArrow)) {
                 input = Vector2.down;
             }
         }
         // Only allow turning left or right while moving in the y-axis
-        else if (direction.y != 0f)
+        if (direction.y != 0f)
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow)) {
                 input = Vector2.left;
-            } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+            }
+            
+            if (Input.GetKeyDown(KeyCode.RightArrow)) {
                 input = Vector2.right;
             }
         }
