@@ -49,8 +49,8 @@ public class AngryHeartSystem : MonoBehaviour
                 angryLife = 1;
                 sadSnake.GetComponent<SadHeartSystem>().sadLife = 1;
                 GetComponent<AngryController>().ResetAngryState();
-
             } 
+            
             // Otherwise, if sad is dead and angry isn't dead, load angry's win scene
             else if(angryLife == 0 && sadLife != 0) {
                 SceneManager.LoadScene("SadWin", LoadSceneMode.Single);
