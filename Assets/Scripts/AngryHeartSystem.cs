@@ -28,14 +28,16 @@ public class AngryHeartSystem : MonoBehaviour
 
         if(angryLife == 1) {
             heart1.GetComponent<Image>().sprite = emptyHeart;            
-        }
-        // Get sad heart system script and the sadLife variable
-        sadSnake = GameObject.Find("Sad Snake");
-        int sadLife = sadSnake.GetComponent<SadHeartSystem>().sadLife;        
+        }    
     }
 
-    public void Update() {
-        if(angryLife == 0 || sadLife == 0) { 
+    public void Update()
+    {
+        // Get sad heart system script and the sadLife variable
+        sadSnake = GameObject.Find("Sad Snake");
+        int sadLife = sadSnake.GetComponent<SadHeartSystem>().sadLife;
+
+        if(angryLife == 0 && sadLife == 0) { 
             timer++;
         }
 
@@ -46,10 +48,13 @@ public class AngryHeartSystem : MonoBehaviour
                 angryLife = 1;
                 GetComponent<AngryController>().ResetAngryState();
 
-            } else if(angryLife == 0 && sadLife != 0) {
+            } 
+            // Otherwise, if sad is dead and angry isn't dead, load angry's win scene
+            else if(sadLife == 0 && angryLife != 0) {
                 heart2.GetComponent<Image>().sprite = emptyHeart;
-                SceneManager.LoadScene("SadWin", LoadSceneMode.Single);
+                SceneManager.LoadScene("AngryWin", LoadSceneMode.Single);
             }
+            timer = 0;
         }
     }
 }

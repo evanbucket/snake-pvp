@@ -119,6 +119,7 @@ public class SadController : MonoBehaviour
             ResetSadState();
 
             // Lose a life!
+            Debug.Log("Sad is taking damage");
             GetComponent<SadHeartSystem>().TakeDamage(1);
         }
     }
