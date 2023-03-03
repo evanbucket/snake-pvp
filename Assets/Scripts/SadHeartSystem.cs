@@ -27,6 +27,7 @@ public class SadHeartSystem : MonoBehaviour
         if(sadLife == 1) {
             heart1.GetComponent<Image>().sprite = emptyHeart;            
         }
+        /* Debug.Log("sadLife = " + sadLife); */
     }
 
     public void Update()
@@ -35,22 +36,22 @@ public class SadHeartSystem : MonoBehaviour
         angrySnake = GameObject.Find("Angry Snake");
         int angryLife = angrySnake.GetComponent<AngryHeartSystem>().angryLife;
 
-        if(angryLife == 0 && sadLife == 0) { 
+        if(angryLife == 0 || sadLife == 0) { 
             timer++;
         }
 
         if (timer > 10) {
             // if both snake's life is 0, reset game with hearts back at 1.
             if(angryLife == 0 && sadLife == 0) {
-                Debug.Log("tie");
+                /* Debug.Log("tie"); */
                 sadLife = 1;
+                angrySnake.GetComponent<AngryHeartSystem>().angryLife = 1;
                 GetComponent<SadController>().ResetSadState();
 
             }
             // Otherwise, if angry is dead and sad isn't, load sad's win scene 
-            else if(angryLife == 0 && sadLife != 0) {
-                heart2.GetComponent<Image>().sprite = emptyHeart;
-                SceneManager.LoadScene("SadWin", LoadSceneMode.Single);
+            else if(sadLife == 0 && angryLife != 0) {
+                SceneManager.LoadScene("AngryWin", LoadSceneMode.Single);
             }
             timer = 0;
         }

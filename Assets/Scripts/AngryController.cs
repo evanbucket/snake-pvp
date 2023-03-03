@@ -121,7 +121,7 @@ public class AngryController : MonoBehaviour
             ResetAngryState(); 
 
             // Lose a life!
-            Debug.Log("Angry is taking damage");
+            /* Debug.Log("Angry is taking damage"); */
             GetComponent<AngryHeartSystem>().TakeDamage(1);
         }
     } 
