@@ -11,5 +11,9 @@ public class Restart : MonoBehaviour
        if(Input.GetKeyDown(KeyCode.R)) {
             SceneManager.LoadScene("SnakeGame", LoadSceneMode.Single);
        }
+
+       /* if(Input.GetKeyDown(KeyCode.B)) {
+            SceneManager.LoadScene("Title", LoadSceneMode.Single);
+       }  */
     }
 }

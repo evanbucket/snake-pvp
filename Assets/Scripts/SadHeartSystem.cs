@@ -43,10 +43,10 @@ public class SadHeartSystem : MonoBehaviour
         if (timer > 10) {
             // if both snake's life is 0, reset game with hearts back at 1.
             if(angryLife == 0 && sadLife == 0) {
-                /* Debug.Log("tie"); */
+                Debug.Log("sad says tie");
                 sadLife = 1;
                 angrySnake.GetComponent<AngryHeartSystem>().angryLife = 1;
-                GetComponent<SadController>().ResetSadState();
+                //GetComponent<SadController>().ResetSadState();
 
             }
             // Otherwise, if angry is dead and sad isn't, load sad's win scene 

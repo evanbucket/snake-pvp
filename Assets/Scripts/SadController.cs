@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,18 +8,25 @@ public class SadController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 direction = Vector2.left;
     private Vector2 input;
+    public float speed = 10f;
+    public float speedMultiplier = 1f;
+    private DateTime nextUpdate;
     private List<Transform> segments = new List<Transform>();
     public Transform segmentPrefab;
     public GameObject angrySnake;
     public GameObject foodFruit2;
     public int initialSize = 3;
     private bool isResettingEnemyState = false;
+    private bool isStarting = false;
 
     //Start is called before the first frame update
     void Start()
     {
+        isStarting = true;
+        nextUpdate = DateTime.Now;
         // Allows the snake to start at size 3 at the start of the game by resetting the state of the game
         ResetSadState();
+        isStarting = false;
     }
 
     //Update is called once per frame
@@ -50,6 +58,12 @@ public class SadController : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        // Wait until the next update before proceeding
+        if (DateTime.Now < nextUpdate) {
+            return;
+        }
+
         // Set the new direction based on the input
         if (input != Vector2.zero) {
             direction = input;
@@ -67,6 +81,7 @@ public class SadController : MonoBehaviour
         float y = Mathf.Round(transform.position.y) + direction.y;
 
         transform.position = new Vector2(x, y);
+        nextUpdate = DateTime.Now.AddSeconds(.1);
     }
 
     private void Grow()
@@ -81,7 +96,6 @@ public class SadController : MonoBehaviour
     {
         isResettingEnemyState = true;
         angrySnake.GetComponent<AngryController>().ResetAngryState();
-        foodFruit2.GetComponent<Food>().RandomizePosition();
         isResettingEnemyState = false;
     }
 
@@ -90,7 +104,10 @@ public class SadController : MonoBehaviour
         if(isResettingEnemyState) {
             return;
         }
-        ResetEnemyState();
+        if(!isStarting) {
+            ResetEnemyState();
+        }
+        foodFruit2.GetComponent<Food>().RandomizePosition();
         direction = Vector2.left;
         input = Vector2.left;
         this.transform.position = new Vector3(11, 0, 0);
@@ -108,6 +125,19 @@ public class SadController : MonoBehaviour
         for (int i = 1; i < this.initialSize; i++) {
             Grow();
         }
+        nextUpdate = DateTime.Now;
+    }
+
+    public bool Occupies(float x, float y)
+    {
+        foreach (Transform segment in segments)
+        {
+            if (segment.position.x == x && segment.position.y == y) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -119,8 +149,9 @@ public class SadController : MonoBehaviour
             ResetSadState();
 
             // Lose a life!
-            /* Debug.Log("Sad is taking damage"); */
+            Debug.Log("Sad is taking damage");
             GetComponent<SadHeartSystem>().TakeDamage(1);
+            
         }
     }
 }

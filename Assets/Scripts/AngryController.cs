@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,21 +6,27 @@ using UnityEngine;
 public class AngryController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    // Change when making sad snake to change direction
     private Vector2 direction = Vector2.right;
     private Vector2 input;
+    public float speed = 10f;
+    public float speedMultiplier = 1f;
+    private DateTime nextUpdate;
     private List<Transform> segments = new List<Transform>();
     public Transform segmentPrefab;
     public GameObject sadSnake;
     public GameObject foodFruit;
     public int initialSize = 3;
     private bool isResettingEnemyState = false;
+    private bool isStarting = false;
 
     //Start is called before the first frame update
     void Start()
     {
         // Allows the snake to start at size 3 at the start of the game by resetting the state of the game
+        isStarting = true;
+        nextUpdate = DateTime.Now;
         ResetAngryState();
+        isStarting = false;
     }
 
     //Update is called once per frame
@@ -46,13 +53,19 @@ public class AngryController : MonoBehaviour
                 input = Vector2.right;
             }
         }
-        // I KNOW WHAT THE INPUT PROBLEM IS!
+
         // When there are 2 inputs while the snake is on one tile, the game only inputs the first one, instead of both of them in sequence.
-        // How to fix this: I have no idea. BUT NOW I KNOW WHAT THE PROBLEM IS! its not fps I don't think
+        // How to fix this: I have no idea.
     } 
 
     void FixedUpdate()
     {
+
+        // Wait until next update before proceeding
+        if (DateTime.Now < nextUpdate) {
+            return;
+        }
+
         // Set the new direction based on the input
         if (input != Vector2.zero) {
             direction = input;
@@ -70,6 +83,7 @@ public class AngryController : MonoBehaviour
         float y = Mathf.Round(transform.position.y) + direction.y;
 
         transform.position = new Vector2(x, y);
+        nextUpdate = DateTime.Now.AddSeconds(.1);
     }
 
     private void Grow()
@@ -83,7 +97,6 @@ public class AngryController : MonoBehaviour
     {
         isResettingEnemyState = true;
         sadSnake.GetComponent<SadController>().ResetSadState();
-        foodFruit.GetComponent<Food>().RandomizePosition();
         isResettingEnemyState = false;
     }
 
@@ -92,7 +105,10 @@ public class AngryController : MonoBehaviour
         if(isResettingEnemyState) {
             return;
         }
-        ResetEnemyState();
+        if(!isStarting) {
+            ResetEnemyState();
+        }
+        foodFruit.GetComponent<Food>().RandomizePosition();
         direction = Vector2.right;
         input = Vector2.right;
         this.transform.position = new Vector3(-11, 0, 0);
@@ -110,6 +126,19 @@ public class AngryController : MonoBehaviour
         for (int i = 1; i < this.initialSize; i++) {
             Grow();
         }
+        nextUpdate = DateTime.Now;
+    }
+
+    public bool Occupies(float x, float y)
+    {
+        foreach (Transform segment in segments)
+        {
+            if (segment.position.x == x && segment.position.y == y) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -118,11 +147,12 @@ public class AngryController : MonoBehaviour
         if (other.tag == "Food") {
             Grow();
         } else if (other.tag == "Obstacle" || other.tag == "Player") {
-            ResetAngryState(); 
+            ResetAngryState();
 
             // Lose a life!
-            /* Debug.Log("Angry is taking damage"); */
+            Debug.Log("Angry is taking damage");
             GetComponent<AngryHeartSystem>().TakeDamage(1);
+            // Debug.Break();
         }
     } 
 }
